@@ -1,0 +1,204 @@
+Loading Hugging Face model and tokenizer...
+Enter your text prompt to generate a 3D model assembly: 
+--- Starting Assembly Text-to-Image Generation ---
+=== Starting Assembly Pipeline ===
+Input prompt: The design consists of three main parts. The first part is a rectangular prism with a length of approximately zero point one one four nine meters, a width of zero point zero seven one eight meters, and a height of zero point zero four three one meters. This part is positioned with a slight offset and rotation. The second part is a long, slender cylindrical shape with a length of around zero point two zero one one meters, a width of zero point zero one seven two meters, and a height of zero point zero zero five seven meters. This part is also slightly offset and rotated. The third part is a cylinder with a curved top, measuring about zero point four eight four one meters in length, zero point one one five two meters in width, and zero point zero three four five meters in height. This part is positioned at the base of the assembly. All parts are oriented similarly and assembled to form a complex, multi-part structure.
+
+Step 1: Analyzing text for multiple parts using SiliconFlow...
+调用SiliconFlow API，模型: Qwen/Qwen2.5-7B-Instruct
+API响应状态码: 200
+分析结果: has_multiple_parts=True, parts=['A rectangular prism with a length of approximately zero point one one four nine meters, a width of zero point zero seven one eight meters, and a height of zero point zero four three one meters. This part is positioned with a slight offset and rotation.', 'A long, slender cylindrical shape with a length of around zero point two zero one one meters, a width of zero point zero one seven two meters, and a height of zero point zero zero five seven meters. This part is also slightly offset and rotated.', 'A cylinder with a curved top, measuring about zero point four eight four one meters in length, zero point one one five two meters in width, and zero point zero three four five meters in height. This part is positioned at the base of the assembly.']
+Found 3 parts:
+  Part 1: A rectangular prism with a length of approximately zero point one one four nine meters, a width of zero point zero seven one eight meters, and a height of zero point zero four three one meters. This part is positioned with a slight offset and rotation.
+  Part 2: A long, slender cylindrical shape with a length of around zero point two zero one one meters, a width of zero point zero one seven two meters, and a height of zero point zero zero five seven meters. This part is also slightly offset and rotated.
+  Part 3: A cylinder with a curved top, measuring about zero point four eight four one meters in length, zero point one one five two meters in width, and zero point zero three four five meters in height. This part is positioned at the base of the assembly.
+
+Step 2: Generating CadQuery code for each part...
+
+Generating code for part 1...
+Generating CadQuery code for: A rectangular prism with a length of approximately zero point one one four nine meters, a width of z...
+Part 1 code generated successfully
+Part 1 code:
+---
+import cadquery as cq
+# --- Part 1: Rectangular Prism ---
+part_1_length = 0.1149 * 0.1149  # Sketch length scaled
+part_1_width = 0.0718 * 0.1149  # Sketch width scaled
+part_1_height = 0.0431
+part_1 = cq.Workplane("XY").rect(part_1_length, part_1_width).extrude(part_1_height)
+# --- Coordinate System Transformation for Part 1 ---
+part_1 = part_1.rotate((0, 0, 0), (0, 0, 1), -90)
+part_1 = part_1.translate((0, 0.0431, 0))
+# --- Assembly (if needed, based on the single part) ---
+# In this case, there's only one part, so no assembly is needed.
+# If there were multiple parts, you would use .union() or .cut() to combine them.
+# --- Final Result ---
+result = part_1
+---
+
+Generating code for part 2...
+Generating CadQuery code for: A long, slender cylindrical shape with a length of around zero point two zero one one meters, a widt...
+Part 2 code generated successfully
+Part 2 code:
+---
+import cadquery as cq
+# --- Part 1 ---
+part_1 = (
+    cq.Workplane("XY")
+    .moveTo(0.0, 0.0)
+    .lineTo(0.2011, 0.0)
+    .lineTo(0.2011, 0.0172)
+    .lineTo(0.0, 0.0172)
+    .lineTo(0.0, 0.0)
+    .close()
+    .extrude(0.0057)
+)
+# --- Coordinate System Transformation for Part 1 ---
+part_1 = part_1.rotate((0, 0, 0), (0, 0, 1), -90)
+part_1 = part_1.translate((0, 0.0057, 0))
+# --- Assembly ---
+assembly = part_1
+---
+
+Generating code for part 3...
+Generating CadQuery code for: A cylinder with a curved top, measuring about zero point four eight four one meters in length, zero ...
+Part 3 code generated successfully
+Part 3 code:
+---
+import cadquery as cq
+import math
+# --- Part 1: Cylinder with Curved Top ---
+part_1_length = 0.4841 * 0.4841  # Scaled length
+part_1_width = 0.1152 * 0.4841   # Scaled width
+part_1_height = 0.0345
+part_1 = (
+    cq.Workplane("XY")
+    .moveTo(0.0, 0.0)
+    .lineTo(part_1_length, 0.0)
+    .threePointArc((part_1_length/2, part_1_width), (0.0, 0.0))
+    .close()
+    .extrude(part_1_height)
+)
+# --- Coordinate System Transformation for Part 1 ---
+part_1 = part_1.rotate((0, 0, 0), (0, 0, 1), -90)
+part_1 = part_1.translate((0, 0.0345, 0))
+# --- Assembly ---
+assembly = part_1
+# Export to STL
+---
+
+Step 3: Integrating 3 parts into Assembly using SiliconFlow...
+调用SiliconFlow API，模型: Qwen/Qwen2.5-7B-Instruct
+API响应状态码: 200
+Assembly集成响应:
+import cadquery as cq
+
+# --- Part 1: Rectangular Prism ---
+part_1_length = 0.1149 * 0.1149  # Sketch length scaled
+part_1_width = 0.0718 * 0.1149  # Sketch width scaled
+part_1_height = 0.0431
+part_1 = cq.Workplane("XY").rect(part_1_length, part_1_width).extrude(part_1_height)
+part_1 = part_1.rotate((0, 0, 0), (0, 0, 1), -90)
+part_1 = part_1.translate((0, 0.0431, 0))
+
+# --- Part 2: Long, Slender Cylinder ---
+part_2_length = 0.2011
+part_2_width = 0.0172
+part_2_height = 0.0057
+part_2 = (
+    cq.Workplane("XY")
+    .moveTo(0.0, 0.0)
+    .lineTo(part_2_length, 0.0)
+    .lineTo(part_2_length, part_2_width)
+    .lineTo(0.0, part_2_width)
+    .lineTo(0.0, 0.0)
+    .close()
+    .extrude(part_2_height)
+)
+part_2 = part_2.rotate((0, 0, 0), (0, 0, 1), -90)
+part_2 = part_2.translate((0, 0.0057, 0))
+
+# --- Part 3: Cylinder with Curved Top ---
+part_3_length = 0.4841 * 0.4841  # Scaled length
+part_3_width = 0.1152 * 0.4841   # Scaled width
+part_3_height = 0.0345
+part_3 = (
+    cq.Workplane("XY")
+    .moveTo(0.0, 0.0)
+    .lineTo(part_3_length, 0.0)
+    .threePointArc((part_3_length / 2, part_3_width), (0.0, 0.0))
+    .close()
+    .extrude(part_3_height)
+)
+part_3 = part_3.rotate((0, 0, 0), (0, 0, 1), -90)
+part_3 = part_3.translate((0, 0.0345, 0))
+
+# --- Assembly ---
+assembly = part_3.union(part_1).union(part_2)
+
+result = assembly
+
+Final CadQuery Code:
+---
+import cadquery as cq
+
+# --- Part 1: Rectangular Prism ---
+part_1_length = 0.1149 * 0.1149  # Sketch length scaled
+part_1_width = 0.0718 * 0.1149  # Sketch width scaled
+part_1_height = 0.0431
+part_1 = cq.Workplane("XY").rect(part_1_length, part_1_width).extrude(part_1_height)
+part_1 = part_1.rotate((0, 0, 0), (0, 0, 1), -90)
+part_1 = part_1.translate((0, 0.0431, 0))
+
+# --- Part 2: Long, Slender Cylinder ---
+part_2_length = 0.2011
+part_2_width = 0.0172
+part_2_height = 0.0057
+part_2 = (
+    cq.Workplane("XY")
+    .moveTo(0.0, 0.0)
+    .lineTo(part_2_length, 0.0)
+    .lineTo(part_2_length, part_2_width)
+    .lineTo(0.0, part_2_width)
+    .lineTo(0.0, 0.0)
+    .close()
+    .extrude(part_2_height)
+)
+part_2 = part_2.rotate((0, 0, 0), (0, 0, 1), -90)
+part_2 = part_2.translate((0, 0.0057, 0))
+
+# --- Part 3: Cylinder with Curved Top ---
+part_3_length = 0.4841 * 0.4841  # Scaled length
+part_3_width = 0.1152 * 0.4841   # Scaled width
+part_3_height = 0.0345
+part_3 = (
+    cq.Workplane("XY")
+    .moveTo(0.0, 0.0)
+    .lineTo(part_3_length, 0.0)
+    .threePointArc((part_3_length / 2, part_3_width), (0.0, 0.0))
+    .close()
+    .extrude(part_3_height)
+)
+part_3 = part_3.rotate((0, 0, 0), (0, 0, 1), -90)
+part_3 = part_3.translate((0, 0.0345, 0))
+
+# --- Assembly ---
+assembly = part_3.union(part_1).union(part_2)
+
+result = assembly
+---
+Using temporary directory: /tmp/tmp8169vzy_
+
+--- STL生成尝试 1/4 ---
+Running CadQuery code and saving STL to: /tmp/tmp8169vzy_/model.stl
+Found CadQuery Workplane object.
+Successfully generated STL: /tmp/tmp8169vzy_/model.stl
+Exporting GLB file to: glb/model.glb
+Successfully generated GLB: glb/model.glb
+STL生成成功！
+Rendering STL file /tmp/tmp8169vzy_/model.stl using Blender.
+Successfully rendered image: /tmp/tmp8169vzy_/blender_render_output/render.png
+Final image saved to: assembly_generated_image.png
+
+--- Assembly Pipeline Succeeded ---
+Generated image saved at: /root/Workspace/Text-to-CadQuery/pipeline_vis/assembly_generated_image.png

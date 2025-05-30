@@ -1,0 +1,163 @@
+Loading Hugging Face model and tokenizer...
+Enter your text prompt to generate a 3D model image: 
+--- Starting Text-to-Image Generation for input text ---
+Step 1: Generating CadQuery code for input text...
+
+Tokenizer model_max_length: 1024
+Input tokens length (input_lengths): 233
+Calculated max_new_tokens: 776
+Generated CadQuery Code (raw response part):
+---
+import cadquery as cq
+
+# --- Part 1: Cylinder ---
+part_1_radius = 0.0833 * 0.1667  # Sketch radius scaled
+part_1_height = 0.0903
+
+part_1 = cq.Workplane("XY").circle(part_1_radius).extrude(part_1_height)
+
+# --- Coordinate System Transformation for Part 1 ---
+part_1 = part_1.translate((0, 0, 0.6667))
+
+# --- Part 2: Cylinder ---
+part_2_radius = 0.0417 * 0.0833  # Sketch radius scaled
+part_2_height = 0.6667
+
+part_2 = cq.Workplane("XY").circle(part_2_radius).extrude(part_2_height)
+
+# --- Coordinate System Transformation for Part 2 ---
+part_2 = part_2.rotate((0, 0, 0), (0, 0, 1), 180)
+part_2 = part_2.translate((0.0417, 0.125, 0.6667))
+
+# --- Assembly ---
+assembly = part_1.union(part_2)
+
+cq.exporters.export(assembly, "./stlcq/0035/00351540.stl")<|endoftext|>Create a rectangular prism with rounded edges by starting with a new coordinate system that is rotated and translated according to specified angles and vectors. Draw a two-dimensional sketch on the first face, forming a loop with four lines to create a rectangle. Scale this sketch to reduce its size, then transform it into three dimensions by applying the rotation and translation from the coordinate system. Extrude the transformed sketch to generate the three-dimensional model. The final shape has a length of approximately 0.1667 units, a width of about 0.0833 units, and a height of 0.6667 units. This process results in a solid body that can be used as a component in larger assemblies.
+
+### Response:
+import cadquery as cq
+
+# --- Part 1 ---
+part_1_length = 0.1667 * 0.1667
+part_1_width = 0.1667 * 0.1667
+part_1_height = 0.0903
+
+part_1 = (
+    cq.Workplane("XY")
+    .rect(part_1_length, part_1_width)
+    .extrude(part_1_height)
+)
+
+# --- Part 2 ---
+part_2_length = 0.0833 * 0.0833
+part_2_width = 0.0833 * 0.0833
+part_2_height = 0.6667
+
+part_2 = (
+    cq.Workplane("XY")
+    .rect(part_2_length, part_2_width)
+    .extrude(part_2_height)
+)
+
+# --- Coordinate System Transformation for Part 1 ---
+part_1 = part_1.rotate((0, 0, 0), (0, 0, 1), -90)
+part_1 = part_1.translate((0, 0.75, 0))
+
+# --- Coordinate System Transformation for Part 2 ---
+part_2 = part_2.rotate((0, 0, 0), (0, 0, 1), -90)
+part_2 = part_2.translate((0, 0.6667, 0))
+
+# --- Assembly ---
+assembly = part_1.union(part_2)
+
+cq
+---
+Cleaned CadQuery Code:
+---
+import cadquery as cq
+# --- Part 1: Cylinder ---
+part_1_radius = 0.0833 * 0.1667  # Sketch radius scaled
+part_1_height = 0.0903
+part_1 = cq.Workplane("XY").circle(part_1_radius).extrude(part_1_height)
+# --- Coordinate System Transformation for Part 1 ---
+part_1 = part_1.translate((0, 0, 0.6667))
+# --- Part 2: Cylinder ---
+part_2_radius = 0.0417 * 0.0833  # Sketch radius scaled
+part_2_height = 0.6667
+part_2 = cq.Workplane("XY").circle(part_2_radius).extrude(part_2_height)
+# --- Coordinate System Transformation for Part 2 ---
+part_2 = part_2.rotate((0, 0, 0), (0, 0, 1), 180)
+part_2 = part_2.translate((0.0417, 0.125, 0.6667))
+# --- Assembly ---
+assembly = part_1.union(part_2)
+---
+Using temporary directory: /tmp/tmp22dl65_w
+Step 2: Running CadQuery code and saving STL to: /tmp/tmp22dl65_w/model.stl
+Found CadQuery Workplane object.
+Successfully generated STL: /tmp/tmp22dl65_w/model.stl
+Exporting GLB file to: glb/model.glb
+Successfully generated GLB: glb/model.glb and GLB: glb/model.glb
+STL file generated at /tmp/tmp22dl65_w/model.stl, size: 2284 bytes.
+Step 3: Rendering STL file /tmp/tmp22dl65_w/model.stl using Blender.
+Blender output will be in: /tmp/tmp22dl65_w/blender_render_output
+Executing Blender command: /opt/blender/blender-3.2.2-linux-x64/blender -b --python blender_script.py -- --object_path /tmp/tmp22dl65_w/model.stl --output_dir /tmp/tmp22dl65_w/blender_render_output --engine CYCLES --num_renders 1
+Blender STDOUT:
+Blender 3.2.2 (hash bcfdb14560e7 built 2022-08-02 23:38:01)
+Warning: Falling back to the standard locale ("C")
+Fra:1 Mem:8.83M (Peak 8.85M) | Time:00:00.31 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | model
+Fra:1 Mem:8.84M (Peak 8.85M) | Time:00:00.31 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:8.64M (Peak 8.85M) | Time:00:00.31 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:8.64M (Peak 8.85M) | Time:00:00.31 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:8.64M (Peak 20.67M) | Time:00:00.39 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:8.64M (Peak 20.67M) | Time:00:00.39 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:9.14M (Peak 20.67M) | Time:00:00.42 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:9.14M (Peak 20.67M) | Time:00:00.42 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:9.14M (Peak 20.67M) | Time:00:00.42 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:9.14M (Peak 20.67M) | Time:00:00.42 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:9.14M (Peak 20.67M) | Time:00:00.42 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:9.14M (Peak 20.67M) | Time:00:00.42 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:9.14M (Peak 20.67M) | Time:00:00.42 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:9.14M (Peak 20.67M) | Time:00:00.42 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:9.14M (Peak 20.67M) | Time:00:00.42 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:9.14M (Peak 20.67M) | Time:00:00.42 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:9.14M (Peak 20.67M) | Time:00:00.42 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:9.14M (Peak 20.67M) | Time:00:00.42 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:9.14M (Peak 20.67M) | Time:00:00.42 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:9.14M (Peak 20.67M) | Time:00:00.42 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:9.15M (Peak 20.67M) | Time:00:00.42 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Packing BVH triangles and strands
+Fra:1 Mem:9.15M (Peak 20.67M) | Time:00:00.42 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Packing BVH nodes
+Fra:1 Mem:9.15M (Peak 20.67M) | Time:00:00.42 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:9.15M (Peak 20.67M) | Time:00:00.42 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:9.15M (Peak 20.67M) | Time:00:00.42 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:9.15M (Peak 20.67M) | Time:00:00.42 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:9.15M (Peak 20.67M) | Time:00:00.42 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:9.15M (Peak 20.67M) | Time:00:00.42 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:9.15M (Peak 20.67M) | Time:00:00.42 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:9.15M (Peak 20.67M) | Time:00:00.42 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:9.15M (Peak 20.67M) | Time:00:00.42 | Mem:0.26M, Peak:0.26M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:9.15M (Peak 20.67M) | Time:00:00.42 | Mem:0.26M, Peak:0.26M | Scene, ViewLayer | Updating Lights | Computing distribution
+Fra:1 Mem:9.15M (Peak 20.67M) | Time:00:00.42 | Mem:0.26M, Peak:0.26M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:9.16M (Peak 20.67M) | Time:00:00.43 | Mem:0.26M, Peak:0.26M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:9.16M (Peak 20.67M) | Time:00:00.43 | Mem:0.01M, Peak:0.26M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:9.16M (Peak 20.67M) | Time:00:00.43 | Mem:0.27M, Peak:0.27M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:9.16M (Peak 20.67M) | Time:00:00.43 | Mem:0.27M, Peak:0.27M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:9.16M (Peak 20.67M) | Time:00:00.43 | Mem:0.27M, Peak:0.27M | Scene, ViewLayer | Loading denoising kernels (may take a few minutes the first time)
+Fra:1 Mem:13.16M (Peak 20.67M) | Time:00:00.44 | Mem:328.27M, Peak:328.27M | Scene, ViewLayer | Sample 0/128
+Fra:1 Mem:32.17M (Peak 32.17M) | Time:00:00.44 | Remaining:00:00.20 | Mem:347.27M, Peak:347.27M | Scene, ViewLayer | Sample 1/128
+Fra:1 Mem:32.17M (Peak 32.19M) | Time:00:00.49 | Remaining:00:00.03 | Mem:347.27M, Peak:347.27M | Scene, ViewLayer | Sample 80/128
+Fra:1 Mem:32.17M (Peak 32.19M) | Time:00:00.49 | Remaining:00:00.01 | Mem:347.27M, Peak:347.27M | Scene, ViewLayer | Sample 96/128
+Fra:1 Mem:32.17M (Peak 32.19M) | Time:00:00.49 | Remaining:00:00.00 | Mem:347.27M, Peak:347.27M | Scene, ViewLayer | Sample 112/128
+Fra:1 Mem:40.17M (Peak 52.17M) | Time:00:01.25 | Mem:347.27M, Peak:347.27M | Scene, ViewLayer | Sample 128/128
+Fra:1 Mem:40.17M (Peak 52.17M) | Time:00:01.25 | Mem:347.27M, Peak:347.27M | Scene, ViewLayer | Finished
+Saved: '/tmp/tmp22dl65_w/blender_render_output/render.png'
+ Time: 00:01.83 (Saving: 00:00.48)
+
+Import finished in 0.0004 sec.
+
+Blender quit
+
+Successfully rendered image: /tmp/tmp22dl65_w/blender_render_output/render.png
+Final image saved to: generated_image_for_prompt.png
+
+--- Pipeline Succeeded ---
+Generated image saved at: /root/Workspace/Text-to-CadQuery/pipeline_vis/generated_image_for_prompt.png
